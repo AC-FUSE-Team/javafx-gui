@@ -1,5 +1,3 @@
-package application;
-
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -36,6 +34,7 @@ public class Controller {
 	 */
 	@FXML
 	private Button buttonBack;
+
 	
 	/**
 	 * click button to go to learning section
@@ -96,4 +95,5 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
 }
