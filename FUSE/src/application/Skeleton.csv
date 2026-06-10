@@ -1,0 +1,25 @@
+﻿id,Name,Group,Numbers,R,G,B
+1,Parietal,Cranial Bones,2,49,15,16
+2,Temporal,Cranial Bones,2,92,143,130
+3,Frontal,Cranial Bones,1,57,18,22
+4,Occipital,Cranial Bones,1,178,75,29
+5,Ethmoid,Cranial Bones,1,55,41,56
+6,Sphenoid,Cranial Bones,1,96,139,95
+7,Maxilla,Facial Bones,2,35,44,70
+8,Zygomatic,Facial Bones,2,109,26,26
+9,Mandible,Facial Bones,1,37,69,92
+10,Nasal,Facial Bones,2,42,172,71
+11,Platine,Facial Bones,2,156,137,34
+12,Inferior nasal concha,Facial Bones,2,109,103,161
+13,Lacrimal,Facial Bones,2,30,80,65
+14,Vomer,Facial Bones,1,24,25,19
+15,Malleus,Auditory Ossicles,2,251,252,247
+16,Incus,Auditory Ossicles,2,218,165,32
+17,Stapes,Auditory Ossicles,2,255,255,128
+18,Cervical vertebrae,Hyoid ,7,0,191,255
+19,Thoracic vertebrae,Hyoid ,12,0,0,205
+20,Lumbar vertebrae,Hyoid ,5,138,43,226
+21,Sacrum,Hyoid ,1,75,0,130
+22,Coccyx,Hyoid ,1,176,196,222
+23,Sternum,Thoracic Cage,1,238,130,238
+24,Ribs ,Thoracic Cage,24,112,128,144
