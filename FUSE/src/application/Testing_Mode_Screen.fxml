@@ -60,7 +60,6 @@
 			              <content>
 			                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="160.0">
 			                  <children>
-			                    <!-- 加这个 -->
 			                    <Label fx:id="resultLabel" layoutX="5.0" layoutY="5.0" 
 			                           prefWidth="150.0" wrapText="true" text="" />
 			                  </children>
