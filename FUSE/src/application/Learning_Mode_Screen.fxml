@@ -5,46 +5,68 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 
-<VBox xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+      prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" 
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="600.0">
+      <HBox prefHeight="450.0" prefWidth="600.0">
          <children>
-            <TabPane prefHeight="400.0" prefWidth="495.0" tabClosingPolicy="UNAVAILABLE">
+            
+            <VBox prefWidth="413.0">
+               <children>
+                  <TabPane fx:id="tabPane" prefHeight="150.0" prefWidth="413.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab fx:id="finishTab" text="Finish">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="389.0" />
+                        </content>
+                      </Tab>
+                      <Tab fx:id="pointerTab" text="Pointer">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+                  
+                  <ImageView fx:id="cameraView" fitHeight="300.0" fitWidth="413.0" preserveRatio="true" />
+               </children>
+            </VBox>
+            
+           <TabPane fx:id="resultTabPane" prefHeight="450.0" prefWidth="187.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Finish">
+                <Tab fx:id="learningTab" text="Learning">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="313.0" prefWidth="448.0" />
-                  </content>
-                </Tab>
-                <Tab text="Pointer">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Learning">
-                     <content>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <ScrollPane layoutX="1.0" layoutY="5.0" prefHeight="400.0" prefWidth="180.0">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="136.0" />
-                          </content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="160.0">
+				              <children>
+				                <!-- 加这行 -->
+				                <Label fx:id="resultLabel" layoutX="5.0" layoutY="5.0" prefWidth="150.0" wrapText="true" text="" />
+				              </children>
+				            </AnchorPane>
+				          </content>
                         </ScrollPane>
-                     </content>
-                  </Tab>
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
               </tabs>
             </TabPane>
          </children>
       </HBox>
-      <ScrollPane prefHeight="49.0" prefWidth="600.0">
+
+      <ScrollPane fx:id="information" prefHeight="200.0" prefWidth="200.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="583.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="582.0" />
         </content>
       </ScrollPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0">
