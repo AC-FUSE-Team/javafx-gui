@@ -40,6 +40,11 @@ public class LearningController extends Controller {
     private Image frozenFrame;
 
     private ComputerVisionDriver cvDriver;
+    
+    @FXML
+    private Tab setSceneTab;
+    @FXML
+    private Tab takeSceneTab;
 	
     BoneTable boneTable = new BoneTable("Skeleton.csv");
 	/**
@@ -49,13 +54,14 @@ public class LearningController extends Controller {
     public void initialize() {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         cvDriver = new ComputerVisionDriver(true);
+        frozenMat = new Mat();
         initCamera();
 
         // 
         tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab == pointerTab) {
                 cameraView.setVisible(true);
-                startCamera();
+                // startCamera();
                 //
                 startDetection();
             } else if (newTab == finishTab) {
@@ -63,6 +69,23 @@ public class LearningController extends Controller {
                 stopCamera();
             }
         });
+    }
+    
+    @FXML
+    private void clickStartVideo() {
+        cameraView.setVisible(true);
+        startDetection();
+    }
+    
+    @FXML
+    private void clickSnapshot() {
+        freezeCamera();
+    }
+    
+    @FXML
+    private void clickStopVideo() {
+        stopCamera();
+        System.out.println("Video stopped");
     }
     
     /**
@@ -143,9 +166,25 @@ public class LearningController extends Controller {
         if (camvideo.isOpened()) {
             camvideo.read(mat);
             if (!mat.empty()) {
+            	mat.copyTo(frozenMat);
+            	
+            	Mat resultMat = mat.clone();
+                int selectedMarker = cvDriver.findSelectedMarker(mat, resultMat);
+                
+                if (selectedMarker > 0) {
+                    Scalar[] markerColor = cvDriver.markerTable.getColor(selectedMarker);
+                    if (markerColor != null) {
+                        int b = (int) markerColor[0].val[0];
+                        int g = (int) markerColor[0].val[1];
+                        int r = (int) markerColor[0].val[2];
+                        String boneName = boneTable.findBoneByColor(b, g, r);
+                        resultLabel.setText(boneName);
+                    }
+                }
+                
                 frozenFrame = mat2Image(mat);
                 cameraView.setImage(frozenFrame);
-                System.out.println("Frame frozen for color detection");
+                System.out.println("Snapshot saved");
                 // TODO:
             }
         }
