@@ -1,4 +1,5 @@
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 import javafx.animation.AnimationTimer;
 
@@ -39,12 +40,18 @@ public class TestingController extends Controller {
 	@FXML
 	private Label resultLabel;
 	
+	@FXML
+	private Label bonePromptLabel;
+	@FXML
+	private Label feedbackLabel;
+	
 	private VideoCapture camvideo;
     private AnimationTimer timer;
     private Mat frozenMat;
     private Image frozenFrame;
 
     private ComputerVisionDriver cvDriver;
+    private String currentBoneName = "";
     
     BoneTable boneTable = new BoneTable("Skeleton.csv");
 	
@@ -60,24 +67,98 @@ public class TestingController extends Controller {
         cvDriver = new ComputerVisionDriver(true); 
 
         cameraView.setVisible(false);
-        
-        // 
-        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
-            if (newTab == setSceneTab) {
-                cameraView.setVisible(true);
-                startCamera();
-            } else if (newTab == takeSceneTab) {
-                cameraView.setVisible(true);
-                freezeCamera();
-            } else if (newTab == pointerTab) {
-                cameraView.setVisible(true);
-                //
-                runDetection();
-            } else if (newTab == finishTab) {
-                cameraView.setVisible(false);
-                stopCamera();
+    }
+    
+    @FXML
+    private void clickPickBone() {
+        List<BoneData> bones = boneTable.getAllBones();
+        if (!bones.isEmpty()) {
+            int randomIndex = (int)(Math.random() * bones.size());
+            currentBoneName = bones.get(randomIndex).getName();
+            bonePromptLabel.setText(currentBoneName);
+            feedbackLabel.setText(""); 
+            System.out.println("Picked bone: " + currentBoneName);
+        }
+    }
+    
+    @FXML
+    private void clickStartVideo() {
+        cameraView.setVisible(true);
+        startDetection();
+    }
+    
+    @FXML
+    private void clickSnapshot() {
+        freezeCamera();
+    }
+    
+    @FXML
+    private void clickStopVideo() {
+        stopCamera();
+        System.out.println("Video stopped");
+    }
+    
+    private void startDetection() {
+        if (timer != null) timer.stop();
+
+        timer = new AnimationTimer() {
+            private final Mat mat = new Mat();
+
+            @Override
+            public void handle(long now) {
+                if (camvideo.isOpened()) {
+                    camvideo.read(mat);
+                    if (!mat.empty()) {
+                        Mat resultMat = mat.clone();
+                        cvDriver.findSelectedMarker(mat, resultMat);
+                        cameraView.setImage(mat2Image(resultMat));
+                    }
+                }
             }
-        });
+        };
+        timer.start();
+    }
+    
+    @FXML
+    private void clickCheckResult() {
+        if (currentBoneName.isEmpty()) {
+            feedbackLabel.setText("Please pick a bone first!");
+            feedbackLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: orange;");
+            return;
+        }
+
+        if (frozenMat.empty()) {
+            feedbackLabel.setText("Please take a snapshot first!");
+            feedbackLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: orange;");
+            return;
+        }
+        
+        Mat resultMat = frozenMat.clone();
+        int selectedMarker = cvDriver.findSelectedMarker(frozenMat, resultMat);
+
+        if (selectedMarker > 0) {
+            Scalar[] markerColor = cvDriver.markerTable.getColor(selectedMarker);
+            if (markerColor != null) {
+                int b = (int) markerColor[0].val[0];
+                int g = (int) markerColor[0].val[1];
+                int r = (int) markerColor[0].val[2];
+                String detectedBone = boneTable.findBoneByColor(b, g, r);
+                resultLabel.setText(detectedBone);
+                
+                if (detectedBone.equalsIgnoreCase(currentBoneName)) {
+                    feedbackLabel.setText("Correct! Well done!");
+                    feedbackLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: green;");
+                } else {
+                    feedbackLabel.setText("Incorrect. Detected: " + detectedBone);
+                    feedbackLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: red;");
+                }
+
+                cameraView.setImage(mat2Image(resultMat));
+            }
+        } else {
+            feedbackLabel.setText("No marker detected. Try again.");
+            feedbackLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: orange;");
+        }
     }
     
     /**
