@@ -13,8 +13,10 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
       prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" 
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController">
-   <children>
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController"
+      stylesheets="@style.css">
+
+	<children>
       <HBox prefHeight="450.0" prefWidth="600.0">
          <children>
             
@@ -22,17 +24,26 @@
                <children>
                   <TabPane fx:id="tabPane" prefHeight="150.0" prefWidth="413.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab fx:id="finishTab" text="Finish">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="389.0" />
-                        </content>
+                      <Tab fx:id="setSceneTab" text="Set Scene">
+                      	<content>
+                      		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
+                      			<children>
+                      				<Button text="Start Video" onAction="#clickStartVideo" layoutX="10" layoutY="10"/>
+                      			</children>
+                      		</AnchorPane>
+                      	</content>
                       </Tab>
-                      <Tab fx:id="pointerTab" text="Pointer">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                    </tabs>
+					 <Tab fx:id="takeSceneTab" text="Snapshot">
+					 	<content>
+					 		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
+					 			<children>
+					 				<Button text="Save Snapshot" onAction="#clickSnapshot" layoutX="10" layoutY="10"/>
+					 				<Button text="Stop Video" onAction="#clickStopVideo" layoutX="120" layoutY="10"/>
+					 			</children>
+					 		</AnchorPane>
+					 	</content>
+					 </Tab>
+					</tabs>
                   </TabPane>
                   
                   <ImageView fx:id="cameraView" fitHeight="300.0" fitWidth="413.0" preserveRatio="true" />
