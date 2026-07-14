@@ -1,0 +1,19 @@
+.tab-pane .tab:selected {
+    -fx-background-color: lightblue;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: black;
+}
+
+.root {
+    -fx-background-color: #fffff1;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #fffff1;
+}
+
+.label {
+    -fx-font-size: 24px;
+}
