@@ -13,7 +13,9 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
       prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" 
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="TestingController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="TestingController"
+      stylesheets="@style.css">
+
    <children>
       <HBox prefHeight="450.0" prefWidth="600.0">
          <children>
@@ -22,26 +24,42 @@
                <children>
                   <TabPane fx:id="tabPane" prefHeight="150.0" prefWidth="413.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab fx:id="finishTab" text="Finish">
+                      
+                      <Tab fx:id="setSceneTab" text="Set Scene">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="389.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="389.0">
+                            <children>
+                            	<Label fx:id="bonePromptLabel" layoutX="10" layoutY="10"
+                                     text="Press 'Pick a Bone' to start"
+                                     wrapText="true" prefWidth="250.0"
+                                     style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                              <Button text="Pick a Bone" onAction="#clickPickBone"
+                                      layoutX="10" layoutY="60"/>
+                              <Button text="Start Video" onAction="#clickStartVideo"
+                                      layoutX="120" layoutY="60"/>
+                            </children>
+                           </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab fx:id="setSceneTab" text="Set a Scene">
+                      
+                      <Tab fx:id="takeSceneTab" text="Snapshot">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="389.0">
+                            <children>
+                              <Button text="Save Snapshot" onAction="#clickSnapshot"
+                                      layoutX="10" layoutY="10"/>
+                              <Button text="Stop Video" onAction="#clickStopVideo"
+                                      layoutX="130" layoutY="10"/>
+                              <Button text="Check Result" onAction="#clickCheckResult"
+                                      layoutX="230" layoutY="10"/>
+                              <Label fx:id="feedbackLabel" layoutX="10" layoutY="50"
+                                     text="" wrapText="true" prefWidth="370.0"
+                                     style="-fx-font-size: 14px;"/>
+                            </children>
+                          </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab fx:id="takeSceneTab" text="Take a Scene">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                      <Tab fx:id="pointerTab" text="Pointer">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
+                      
                     </tabs>
                   </TabPane>
                   
